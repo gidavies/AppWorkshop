@@ -435,7 +435,7 @@
     <Content Include="Views\Shared\_CommunityList.cshtml" />
     <Content Include="Views\Shared\_OrderCostSummary.cshtml" />
     <Content Include="Views\Home\Recomendations.cshtml" />
-    <Content Include="Views\Home\Simulatedload.cshtml" />
+    <Content Include="Views\Home\CPUload.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

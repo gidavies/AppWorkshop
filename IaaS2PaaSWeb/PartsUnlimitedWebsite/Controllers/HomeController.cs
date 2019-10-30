@@ -83,13 +83,14 @@ public ActionResult Recomendations()
         }
         //stubbing in a recomendations action
 
-        public ActionResult Simulatedload(string id)
+        [Route("CPUload/{percent}")]
+        public ActionResult CPUload(string percent)
         {
             int percentage;
 
             try
             {
-                percentage = int.Parse(id);
+                percentage = int.Parse(percent);
             }
             catch (Exception)
             {
