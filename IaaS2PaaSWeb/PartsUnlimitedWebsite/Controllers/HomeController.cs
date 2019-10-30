@@ -91,6 +91,11 @@ public ActionResult Recomendations()
             try
             {
                 percentage = int.Parse(percent);
+                // Basic validation
+                if (percentage < 0)
+                    percentage = 0;
+                if (percentage > 100)
+                    percentage = 80;
             }
             catch (Exception)
             {
