@@ -83,7 +83,43 @@ public ActionResult Recomendations()
         }
         //stubbing in a recomendations action
 
+        public ActionResult Simulatedload(string id)
+        {
+            int percentage;
 
+            try
+            {
+                percentage = int.Parse(id);
+            }
+            catch (Exception)
+            {
+                // null, NaN etc.. default to 80%
+                percentage = 80;
+            }
+            
+            ViewBag.Message = percentage + "%";
+
+            for (int i = 0; i < Environment.ProcessorCount; i++)
+            {
+                (new System.Threading.Thread(() =>
+                {
+                    System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+                    watch.Start();
+                    while (true)
+                    {
+                        // Make the loop go on for "percentage" milliseconds then sleep the 
+                        // remaining percentage milliseconds. So 40% utilization means work 40ms and sleep 60ms
+                        if (watch.ElapsedMilliseconds > percentage)
+                        {
+                            System.Threading.Thread.Sleep(100 - percentage);
+                            watch.Reset();
+                            watch.Start();
+                        }
+                    }
+                })).Start();
+            }
+            return View();
+        }
 
         private List<Product> GetNewProducts(int count)
         {
