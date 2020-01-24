@@ -14,6 +14,18 @@
       "type": "securestring",
       "defaultValue":  "Password$123"
     },
+    "DevWorkstationOSVersion": {
+      "type": "string",
+      "defaultValue": "VS-2017-Comm-Latest-WS2016",
+      "allowedValues": [
+        "VS-2017-Comm-Latest-WS2016",
+        "VS-2017-Ent-Latest-WS2016"
+      ]
+    },
+    "DevWorkstationName": {
+      "type": "string",
+      "defaultValue":  "vmdev01"
+    },
     "WebSrvName": {
       "type": "string",
       "defaultValue":  "vmweb01"
@@ -68,6 +80,7 @@
     "WebSrvOSVersion": "2016-Datacenter",
     "TemplateFolder": "nestedtemplates",
     "vNetTemplateFileName": "vNet.json",
+    "DevWorkstationTemplateFileName": "VsDevWorkstation.json",
     "WebSrvTemplateFileName": "WebSrv.json",
     "SqlSrvTemplateFileName": "SqlSrv.json"
   },
@@ -85,6 +98,36 @@
         },
         "parameters": {
           "vNetName": { "value": "[parameters('vNetName')]" }
+        }
+      }
+    },
+    {
+      "name": "DevWorkstation",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-09-01",
+      "dependsOn": [ "vNetDeploy", "WebSrv", "SqlSrv" ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('_artifactsLocation'), '/', variables('TemplateFolder'), '/', variables('DevWorkstationTemplateFileName'), parameters('_artifactsLocationSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "VsDevWorkstationStorageType": { "value": "[variables('srvStorageType')]" },
+          "VsDevWorkstationName": { "value": "[parameters('DevWorkstationName')]" },
+          "AdminUserName": { "value": "[parameters('AdminUserName')]" },
+          "AdminUserPassword": { "value": "[parameters('AdminUserPassword')]" },
+          "VsDevWorkstationWindowsOSVersion": { "value": "[parameters('DevWorkstationOSVersion')]" },
+          "virtualNetworkName": { "value": "[parameters('vNetName')]" },
+          "virtualNetworkResourceGroup": { "value": "[resourceGroup().name]" },
+          "repoUri": { "value": "[parameters('repoUri')]" },
+          "webSrvUri" : { "value": "[ reference('WebSrv').outputs.webSrvUri.value ]" },
+          "dbSrvUri": { "value": "[ reference('SqlSrv').outputs.sqlSrvUri.value ]" },
+          "dbName": {"value": "[parameters('databaseName')]"},
+          "dbUserName": {"value": "[parameters('dbUserName')]"},
+          "dbUserPassword": {"value": "[parameters('dbUserPassword')]"},
+          "_artifactsLocation": { "value": "[parameters('_artifactsLocation')]" },
+          "_artifactsLocationSasToken": { "value": "[parameters('_artifactsLocationSasToken')]" }
         }
       }
     },
