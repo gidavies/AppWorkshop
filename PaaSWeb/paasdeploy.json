@@ -78,7 +78,8 @@
           "[parameters('AppServicePlan')]"
         ],
         "tags": {
-          "displayName": "Website"
+            "[concat('hidden-related:', resourceId('Microsoft.Web/serverfarms', parameters('AppServicePlan')))]": "empty",
+            "displayName": "Website"
         },
         "properties": {
           "name": "[parameters('AppName')]",
