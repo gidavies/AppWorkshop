@@ -36,7 +36,21 @@
             "metadata": {
                 "description": "The pricing tier for the App Service Plan. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
             }
-      }
+        },
+        "repoURL": {
+            "type": "string",
+            "defaultValue": "https://github.com/gidavies/AppWorkshop.git",
+            "metadata": {
+                "description": "The URL for the repo that contains the project to deploy."
+            }
+        },
+        "branch": {
+            "type": "string",
+            "defaultValue": "master",
+            "metadata": {
+                "description": "The branch of the repo to use."
+            }
+        }
     },
     "resources": [
       {
@@ -72,7 +86,21 @@
           "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', [parameters('App Service Plan')]"
         },
         "resources": [
-          {
+            {
+                "type": "sourcecontrols",
+                "apiVersion": "2018-02-01",
+                "name": "web",
+                "location": "resourceGroup().location",
+                "dependsOn": [
+                    "[resourceId('Microsoft.Web/sites', parameters('App Name'))]"
+                ],
+                "properties": {
+                    "repoUrl": "[parameters('repoURL')]",
+                    "branch": "[parameters('branch')]",
+                    "isManualIntegration": true
+                }
+            },
+            {
             "apiVersion": "2018-02-01",
             "type": "config",
             "name": "connectionstrings",
