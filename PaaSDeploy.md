@@ -4,4 +4,4 @@
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-This is to be used in place of Cloning the app in Lab 5.
+Deploys the Parts Unlimited web application in this repo to Azure App Service. Can be used to deploy another instance of the migrated app into PaaS to then configure DR with Traffic Manager.S
