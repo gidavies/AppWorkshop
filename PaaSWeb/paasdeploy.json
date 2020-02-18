@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "App Name": {
+        "AppName": {
             "type": "string",
             "defaultValue": "",
              "metadata": {
@@ -16,7 +16,7 @@
                  "description": "The name of the App Service Plan."
              }
          },
-        "Pricing Tier": {
+        "PricingTier": {
             "type": "string",
             "defaultValue": "S1",
             "allowedValues": [
@@ -37,14 +37,14 @@
                 "description": "The pricing tier for the App Service Plan. Check details at https://azure.microsoft.com/en-us/pricing/details/app-service/"
             }
         },
-        "repoURL": {
+        "RepoURL": {
             "type": "string",
             "defaultValue": "https://github.com/gidavies/AppWorkshop.git",
             "metadata": {
                 "description": "The URL for the repo that contains the project to deploy."
             }
         },
-        "branch": {
+        "Branch": {
             "type": "string",
             "defaultValue": "master",
             "metadata": {
@@ -57,12 +57,12 @@
         "apiVersion": "2018-02-01",
         "name": "[parameters('AppServicePlan')]",
         "type": "Microsoft.Web/serverfarms",
-        "location": "resourceGroup().location",
+        "location": "[resourceGroup().location]",
         "tags": {
           "displayName": "HostingPlan"
         },
         "sku": {
-          "name": "[parameters('Pricing Tier')]",
+          "name": "[parameters('PricingTier')]",
           "capacity": 1
         },
         "properties": {
@@ -71,18 +71,18 @@
       },
       {
         "apiVersion": "2018-02-01",
-        "name": "[parameters('App Name')]",
+        "name": "[parameters('AppName')]",
         "type": "Microsoft.Web/sites",
-        "location": "resourceGroup().location",
+        "location": "[resourceGroup().location]",
         "dependsOn": [
           "[parameters('AppServicePlan')]"
         ],
         "tags": {
-          "[concat('hidden-related:', resourceId('Microsoft.Web/serverfarms', parameters('App Service Plan')))]": "empty",
+          "[concat('hidden-related:', resourceId('Microsoft.Web/serverfarms', parameters('AppServicePlan')))]": "empty",
           "displayName": "Website"
         },
         "properties": {
-          "name": "[parameters('App Name')]",
+          "name": "[parameters('AppName')]",
           "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', [parameters('AppServicePlan')]"
         },
         "resources": [
@@ -90,13 +90,13 @@
                 "type": "sourcecontrols",
                 "apiVersion": "2018-02-01",
                 "name": "web",
-                "location": "resourceGroup().location",
+                "location": "[resourceGroup().location]",
                 "dependsOn": [
-                    "[resourceId('Microsoft.Web/sites', parameters('App Name'))]"
+                    "[resourceId('Microsoft.Web/sites', parameters('AppName'))]"
                 ],
                 "properties": {
-                    "repoUrl": "[parameters('repoURL')]",
-                    "branch": "[parameters('branch')]",
+                    "repoUrl": "[parameters('RepoURL')]",
+                    "branch": "[parameters('Branch')]",
                     "isManualIntegration": true
                 }
             },
@@ -105,7 +105,7 @@
             "type": "config",
             "name": "connectionstrings",
             "dependsOn": [
-              "[parameters('App Name')]"
+              "[parameters('AppName')]"
             ],
             "properties": {
               "DefaultConnection": {
