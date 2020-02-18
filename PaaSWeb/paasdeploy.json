@@ -82,16 +82,16 @@
         },
         "properties": {
           "name": "[parameters('AppName')]",
-          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', [parameters('AppServicePlan')])]"
+          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('AppServicePlan'))]"
         },
         "resources": [
             {
-                "type": "sourcecontrols",
                 "apiVersion": "2018-02-01",
+                "type": "sourcecontrols",
                 "name": "web",
                 "location": "[resourceGroup().location]",
                 "dependsOn": [
-                    "[resourceId('Microsoft.Web/sites', [parameters('AppName')])]"
+                    "[resourceId('Microsoft.Web/sites', parameters('AppName'))]"
                 ],
                 "properties": {
                     "repoUrl": "[parameters('RepoURL')]",
@@ -100,17 +100,17 @@
                 }
             },
             {
-            "apiVersion": "2018-02-01",
-            "type": "config",
-            "name": "connectionstrings",
-            "dependsOn": [
-              "[parameters('AppName')]"
-            ],
-            "properties": {
-              "DefaultConnection": {
-                "value": "[concat('Data Source=tcp:', reference(concat('Microsoft.Sql/servers/', variables('sqlserverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', variables('databaseName'), ';User Id=', parameters('sqlAdministratorLogin'), '@', reference(concat('Microsoft.Sql/servers/', variables('sqlserverName'))).fullyQualifiedDomainName, ';Password=', parameters('sqlAdministratorLoginPassword'), ';')]",
-                "type": "SQLAzure"
-              }
+                "apiVersion": "2018-02-01",
+                "type": "config",
+                "name": "connectionstrings",
+                "dependsOn": [
+                    "[parameters('AppName')]"
+                ],
+                "properties": {
+                    "DefaultConnection": {
+                    "value": "[concat('Data Source=tcp:', reference(concat('Microsoft.Sql/servers/', variables('sqlserverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', variables('databaseName'), ';User Id=', parameters('sqlAdministratorLogin'), '@', reference(concat('Microsoft.Sql/servers/', variables('sqlserverName'))).fullyQualifiedDomainName, ';Password=', parameters('sqlAdministratorLoginPassword'), ';')]",
+                    "type": "SQLAzure"
+                }
             }
           }
         ]
