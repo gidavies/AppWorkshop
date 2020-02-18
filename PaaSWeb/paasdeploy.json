@@ -78,12 +78,11 @@
           "[parameters('AppServicePlan')]"
         ],
         "tags": {
-          "[concat('hidden-related:', resourceId('Microsoft.Web/serverfarms', parameters('AppServicePlan')))]": "empty",
           "displayName": "Website"
         },
         "properties": {
           "name": "[parameters('AppName')]",
-          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', [parameters('AppServicePlan')]"
+          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', [parameters('AppServicePlan')])]"
         },
         "resources": [
             {
@@ -92,7 +91,7 @@
                 "name": "web",
                 "location": "[resourceGroup().location]",
                 "dependsOn": [
-                    "[resourceId('Microsoft.Web/sites', parameters('AppName'))]"
+                    "[resourceId('Microsoft.Web/sites', [parameters('AppName')])]"
                 ],
                 "properties": {
                     "repoUrl": "[parameters('RepoURL')]",
