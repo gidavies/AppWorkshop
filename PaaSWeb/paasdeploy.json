@@ -9,7 +9,7 @@
                  "description": "The name of the App Service."
              }
          },
-         "App Service Plan": {
+         "AppServicePlan": {
             "type": "string",
             "defaultValue": "",
              "metadata": {
@@ -55,7 +55,7 @@
     "resources": [
       {
         "apiVersion": "2018-02-01",
-        "name": "[parameters('App Service Plan')]",
+        "name": "[parameters('AppServicePlan')]",
         "type": "Microsoft.Web/serverfarms",
         "location": "resourceGroup().location",
         "tags": {
@@ -66,7 +66,7 @@
           "capacity": 1
         },
         "properties": {
-          "name": "[parameters('App Service Plan')]"
+          "name": "[parameters('AppServicePlan')]"
         }
       },
       {
@@ -75,7 +75,7 @@
         "type": "Microsoft.Web/sites",
         "location": "resourceGroup().location",
         "dependsOn": [
-          "[parameters('App Service Plan')]"
+          "[parameters('AppServicePlan')]"
         ],
         "tags": {
           "[concat('hidden-related:', resourceId('Microsoft.Web/serverfarms', parameters('App Service Plan')))]": "empty",
@@ -83,7 +83,7 @@
         },
         "properties": {
           "name": "[parameters('App Name')]",
-          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', [parameters('App Service Plan')]"
+          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', [parameters('AppServicePlan')]"
         },
         "resources": [
             {
