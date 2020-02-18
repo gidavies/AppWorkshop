@@ -4,4 +4,4 @@
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-Deploys the Parts Unlimited web application in this repo to Azure App Service. Can be used to deploy another instance of the migrated app into PaaS to then configure DR with Traffic Manager.S
+Deploys the Parts Unlimited web application in this repo to Azure App Service. Provides a simple means to deploy another instance of the migrated app into PaaS to then configure DR with Traffic Manager.
