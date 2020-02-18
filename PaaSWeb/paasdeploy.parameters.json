@@ -6,10 +6,7 @@
         "value": "DRAppServiceName"
       },
       "App Service Plan": {
-        "value": "DRAppServiceName"
-      },
-      "location": {
-        "value": "UK West"
+        "value": "DRAppServicePlanName"
       },
       "Pricing Tier": {
         "value": "S1"
