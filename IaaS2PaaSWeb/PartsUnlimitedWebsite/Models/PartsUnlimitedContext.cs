@@ -1,11 +1,13 @@
 ﻿using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Configuration;
 
 namespace PartsUnlimited.Models
 {
     public class PartsUnlimitedContext : IdentityDbContext<ApplicationUser>, IPartsUnlimitedContext
     {
-        public PartsUnlimitedContext() : base("name=DefaultConnectionString")
+        //public PartsUnlimitedContext() : base("name=DefaultConnectionString")
+        public PartsUnlimitedContext() : base(ConfigurationManager.AppSettings["DefaultConnectionString"])
         {
             this.Configuration.LazyLoadingEnabled = false;
         }
