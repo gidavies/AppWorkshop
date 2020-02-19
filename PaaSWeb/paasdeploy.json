@@ -99,13 +99,6 @@
             "metadata": {
                 "description": "The branch of the repo to use."
             }
-        },
-        "DatabaseConnectionString": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "The connection string for Azure SQL."
-            }
         }
     },
     "resources": [
@@ -155,21 +148,7 @@
                     "branch": "[parameters('Branch')]",
                     "isManualIntegration": true
                 }
-            },
-            {
-                "apiVersion": "2018-02-01",
-                "type": "config",
-                "name": "connectionstrings",
-                "dependsOn": [
-                    "[parameters('AppName')]"
-                ],
-                "properties": {
-                    "DefaultConnection": {
-                    "value": "[parameters('DatabaseConnectionString')]",
-                    "type": "SQLAzure"
-                }
             }
-          }
         ]
       }
     ]
