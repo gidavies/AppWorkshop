@@ -7,7 +7,7 @@ namespace PartsUnlimited.Models
     public class PartsUnlimitedContext : IdentityDbContext<ApplicationUser>, IPartsUnlimitedContext
     {
         //public PartsUnlimitedContext() : base("name=DefaultConnectionString")
-        public PartsUnlimitedContext() : base(ConfigurationManager.AppSettings["DefaultConnectionString"])
+        public PartsUnlimitedContext() : base(ConfigurationManager.AppSettings["DefaultConnection"])
         {
             this.Configuration.LazyLoadingEnabled = false;
         }
