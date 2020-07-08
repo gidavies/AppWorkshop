@@ -44,6 +44,9 @@ $env:Path += ";C:\Program Files\dotnet\"
 $env:Path += ";C:\Program Files\Microsoft SQL Server\130\Tools\Binn\"
 $env:Path += ";C:\Program Files\Git\cmd"
 
+# Ensure TLS1.2 is enabled (unable to get packages below otherwise)
+Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\.NetFramework\v4.0.30319' -Name 'SchUseStrongCrypto' -Value '1' -Type DWord
+
 #Restore NuGet packages
 & "C:\Source\AppWorkshop\IaaS2PaaSWeb\nuget.exe" restore C:\Source\AppWorkshop\IaaS2PaaSWeb\IaaS2PaaSWeb.sln
 
